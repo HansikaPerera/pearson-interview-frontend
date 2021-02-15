@@ -18,12 +18,13 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CountryTableComponent } from './country-table/country-table.component';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {FormsModule} from "@angular/forms";
-import {MatInputModule} from "@angular/material/input";
-import {MatDialogModule} from "@angular/material/dialog";
-import {MatTableModule} from "@angular/material/table";
-import {MatPaginatorModule} from "@angular/material/paginator";
+import { MatFormFieldModule} from "@angular/material/form-field";
+import { FormsModule } from "@angular/forms";
+import { MatInputModule } from "@angular/material/input";
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatTableModule } from "@angular/material/table";
+import { MatPaginatorModule } from "@angular/material/paginator";
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
         MatInputModule,
         MatDialogModule,
         MatTableModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        HttpClientModule
     ],
   providers: [],
   bootstrap: [AppComponent]

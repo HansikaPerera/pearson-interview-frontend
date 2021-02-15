@@ -1,33 +1,36 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTable } from "@angular/material/table";
 import { MatDialog } from "@angular/material/dialog";
 import { DialogBoxComponent } from "../dialog-box/dialog-box.component";
+import { DataService } from "../data.service";
 
 export interface UsersData {
   name: string;
   id: number;
 }
 
-const ELEMENT_DATA: UsersData[] = [
-  {id: 1560608769632, name: 'Artificial Intelligence'},
-  {id: 1560608796014, name: 'Machine Learning'},
-  {id: 1560608787815, name: 'Robotic Process Automation'},
-  {id: 1560608805101, name: 'Blockchain'}
-];
-
 @Component({
   selector: 'app-country-table',
   templateUrl: './country-table.component.html',
   styleUrls: ['./country-table.component.scss']
 })
-export class CountryTableComponent {
+export class CountryTableComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'name', 'action'];
-  dataSource = ELEMENT_DATA;
+  dataSource: UsersData[];
+  dataSize: number;
 
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog, public dataService: DataService) {
+  }
+
+  ngOnInit() {
+
+    this.dataService.getAllCountries().subscribe((data: any[])=>{
+      this.dataSource = data;
+      this.dataSize = data.length;
+    });
   }
 
   openDialog(action, obj) {
@@ -67,9 +70,11 @@ export class CountryTableComponent {
     });
   }
 
-  deleteRowData(row_obj) {
+  deleteRowData(country) {
+
     this.dataSource = this.dataSource.filter((value, key) => {
-      return value.id != row_obj.id;
+      return value.id != country.id;
     });
+    this.dataService.deleteCountry(country.id);
   }
 }

@@ -1,0 +1,11 @@
+{
+  "/rest/v2/*": {
+    "target": "http://localhost:8080/rest/v2",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/rest/v2/country": "/country",
+      "^/rest/v2/country/$1": "/country/$1"
+    }
+  }
+}
