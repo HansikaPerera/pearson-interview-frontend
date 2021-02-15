@@ -19,9 +19,6 @@ export class DataService {
 
   public deleteCountry(countryId) {
 
-    console.log("deleteCountry");
-    console.log(countryId);
-    console.log(`${this.REST_API_SERVER}/country/${countryId}`);
     this.httpClient.delete(`${this.REST_API_SERVER}/country/${countryId}`).subscribe(data => {
       console.log(data);
     });
