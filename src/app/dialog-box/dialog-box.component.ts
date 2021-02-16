@@ -13,6 +13,7 @@ export class DialogBoxComponent {
   local_data:any;
 
   constructor(
+
     public dialogRef: MatDialogRef<DialogBoxComponent>,
     //@Optional() is used to prevent error if no data is passed
     @Optional() @Inject(MAT_DIALOG_DATA) public data: UsersData) {
@@ -21,10 +22,12 @@ export class DialogBoxComponent {
   }
 
   doAction(){
+
     this.dialogRef.close({event:this.action,data:this.local_data});
   }
 
   closeDialog(){
+
     this.dialogRef.close({event:'Cancel'});
   }
 
