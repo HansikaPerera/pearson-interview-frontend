@@ -23,7 +23,6 @@ import { FormsModule } from "@angular/forms";
 import { MatInputModule } from "@angular/material/input";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatTableModule } from "@angular/material/table";
-import { MatPaginatorModule } from "@angular/material/paginator";
 import { HttpClientModule } from "@angular/common/http";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
@@ -53,7 +52,6 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     MatInputModule,
     MatDialogModule,
     MatTableModule,
-    MatPaginatorModule,
     HttpClientModule,
     MatProgressSpinnerModule
   ],

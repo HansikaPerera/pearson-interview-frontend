@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTable } from "@angular/material/table";
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatTable, MatTableDataSource } from "@angular/material/table";
 import { MatDialog } from "@angular/material/dialog";
 import { DialogBoxComponent } from "../dialog-box/dialog-box.component";
 import { DataService } from "../data.service";
+import { MatPaginator } from "@angular/material/paginator";
 
 export interface UsersData {
   name: string;
@@ -16,24 +17,34 @@ export interface UsersData {
   templateUrl: './country-table.component.html',
   styleUrls: ['./country-table.component.scss']
 })
-export class CountryTableComponent implements OnInit {
+export class CountryTableComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['id', 'name', 'capital', 'population', 'action'];
-  dataSource: UsersData[];
-  dataSize: number;
+  dataSource = new MatTableDataSource<UsersData>();
   isLoading = true;
 
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(public dialog: MatDialog, public dataService: DataService) {
   }
 
   ngOnInit() {
 
-    this.dataService.getAllCountries().subscribe((data: any[])=>{
+    this.fetchAllCountries();
+  }
+
+  ngAfterViewInit(): void {
+
+    this.dataSource.paginator = this.paginator;
+  }
+
+  fetchAllCountries() {
+
+    this.isLoading = true;
+    this.dataService.getAllCountries().subscribe((data: UsersData[])=>{
       this.isLoading = false;
-      this.dataSource = data;
-      this.dataSize = data.length;
+      this.dataSource.data = data;
     });
   }
 
@@ -59,29 +70,21 @@ export class CountryTableComponent implements OnInit {
   addRowData(country) {
 
     this.dataService.addCountry(country).subscribe((data: UsersData)=>{
-      this.dataSource.push(data);
-      this.table.renderRows();
+      this.fetchAllCountries();
     });
   }
 
   updateRowData(country) {
 
     this.dataService.updateCountry(country).subscribe((data: any[])=>{
-      this.dataSource = this.dataSource.filter((value, key) => {
-        if (value.id == country.id) {
-          value.population = country.population;
-          value.capital = country.capital;
-        }
-        return true;
-      });
+      this.fetchAllCountries();
     });
   }
 
   deleteRowData(country) {
 
-    this.dataSource = this.dataSource.filter((value, key) => {
-      return value.id != country.id;
+    this.dataService.deleteCountry(country.id).subscribe((data: any[])=>{
+      this.fetchAllCountries();
     });
-    this.dataService.deleteCountry(country.id);
   }
 }

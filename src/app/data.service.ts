@@ -19,9 +19,7 @@ export class DataService {
 
   public deleteCountry(countryId) {
 
-    this.httpClient.delete(`${this.REST_API_SERVER}/country/${countryId}`).subscribe(data => {
-      console.log(data);
-    });
+    return this.httpClient.delete(`${this.REST_API_SERVER}/country/${countryId}`);
   }
 
   public updateCountry(country) {
