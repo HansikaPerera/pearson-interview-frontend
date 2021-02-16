@@ -1,5 +1,11 @@
-<div class="country-table-container">
-
+<div *ngIf="isLoading"
+     style="display: flex; justify-content: center; align-items: center; background: white;">
+  <mat-progress-spinner
+    color="primary"
+    mode="indeterminate">
+  </mat-progress-spinner>
+</div>
+<div class="country-table-container" *ngIf="!isLoading">
   <div class="country-add-button">
     <button mat-mini-fab color="primary" aria-label="Add Country" (click)="openDialog('Add',{})">
       <mat-icon>add</mat-icon>
@@ -44,5 +50,4 @@
     </table>
     <mat-paginator [length]="dataSize" [pageSize]="30"></mat-paginator>
   </div>
-
 </div>

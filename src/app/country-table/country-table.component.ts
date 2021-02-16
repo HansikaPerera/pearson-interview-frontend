@@ -21,6 +21,7 @@ export class CountryTableComponent implements OnInit {
   displayedColumns: string[] = ['id', 'name', 'capital', 'population', 'action'];
   dataSource: UsersData[];
   dataSize: number;
+  isLoading = true;
 
   @ViewChild(MatTable, {static: true}) table: MatTable<any>;
 
@@ -30,15 +31,17 @@ export class CountryTableComponent implements OnInit {
   ngOnInit() {
 
     this.dataService.getAllCountries().subscribe((data: any[])=>{
+      this.isLoading = false;
       this.dataSource = data;
       this.dataSize = data.length;
     });
   }
 
   openDialog(action, obj) {
+
     obj.action = action;
     const dialogRef = this.dialog.open(DialogBoxComponent, {
-      width: '250px',
+      width: '500px',
       data: obj
     });
 
