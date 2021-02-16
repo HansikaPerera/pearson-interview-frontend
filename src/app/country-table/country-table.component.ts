@@ -7,7 +7,6 @@ import { MatPaginator } from "@angular/material/paginator";
 
 export interface UsersData {
   name: string;
-  id: number;
   population: number;
   capital: string;
 }
@@ -19,7 +18,7 @@ export interface UsersData {
 })
 export class CountryTableComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['id', 'name', 'capital', 'population', 'action'];
+  displayedColumns: string[] = ['name', 'capital', 'population', 'action'];
   dataSource = new MatTableDataSource<UsersData>();
   isLoading = true;
 
@@ -83,7 +82,7 @@ export class CountryTableComponent implements OnInit, AfterViewInit {
 
   deleteRowData(country) {
 
-    this.dataService.deleteCountry(country.id).subscribe((data: any[])=>{
+    this.dataService.deleteCountry(country.name).subscribe((data: any[])=>{
       this.fetchAllCountries();
     });
   }
