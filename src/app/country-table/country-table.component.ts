@@ -7,6 +7,8 @@ import { DataService } from "../data.service";
 export interface UsersData {
   name: string;
   id: number;
+  population: number;
+  capital: string;
 }
 
 @Component({
@@ -16,7 +18,7 @@ export interface UsersData {
 })
 export class CountryTableComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'action'];
+  displayedColumns: string[] = ['id', 'name', 'capital', 'population', 'action'];
   dataSource: UsersData[];
   dataSize: number;
 
@@ -51,22 +53,24 @@ export class CountryTableComponent implements OnInit {
     });
   }
 
-  addRowData(row_obj) {
-    const d = new Date();
-    this.dataSource.push({
-      id: d.getTime(),
-      name: row_obj.name
-    });
-    this.table.renderRows();
+  addRowData(country) {
 
+    this.dataService.addCountry(country).subscribe((data: UsersData)=>{
+      this.dataSource.push(data);
+      this.table.renderRows();
+    });
   }
 
-  updateRowData(row_obj) {
-    this.dataSource = this.dataSource.filter((value, key) => {
-      if (value.id == row_obj.id) {
-        value.name = row_obj.name;
-      }
-      return true;
+  updateRowData(country) {
+
+    this.dataService.updateCountry(country).subscribe((data: any[])=>{
+      this.dataSource = this.dataSource.filter((value, key) => {
+        if (value.id == country.id) {
+          value.population = country.population;
+          value.capital = country.capital;
+        }
+        return true;
+      });
     });
   }
 

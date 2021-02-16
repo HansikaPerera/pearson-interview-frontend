@@ -24,4 +24,14 @@ export class DataService {
     });
   }
 
+  public updateCountry(country) {
+
+    return this.httpClient.put(`${this.REST_API_SERVER}/country`, country);
+  }
+
+  public addCountry(country) {
+
+    return this.httpClient.post(`${this.REST_API_SERVER}/country`, country);
+  }
+
 }
